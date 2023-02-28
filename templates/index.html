@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    {% if session["name"] %}
+        You are logged in as {{ session["name"] }}. <a href="/logout">Log out</a>.
+    {% else %}
+        You are not logged in. <a href="/login">Log in</a>.
+    {% endif %}
+
+    <h1>Karty</h1>
+    <h3>Your first responder</h3>
+    <div>
+      <div id="chatbox">
+        <p class="botText"><span>Hi! I'm Karty.</span></p>
+      </div>
+      <div id="userInput">
+        <input id="textInput" type="text" name="msg" placeholder="Message">
+        <input id="buttonInput" type="submit" value="Send">
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          });
+        }
+        $("#textInput").keypress(function(e) {
+            if ((e.which == 13) && document.getElementById("textInput").value != "" ){
+                getBotResponse();
+            }
+        });
+        $("#buttonInput").click(function() {
+            if (document.getElementById("textInput").value != "") {
+                getBotResponse();
+            }
+        })
+      </script>
+    </div>
+
+{% endblock %}

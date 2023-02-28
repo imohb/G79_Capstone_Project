@@ -1,0 +1,14 @@
+# Used by pip to install required python packages
+# Usage: pip install -r requirements.txt
+# Project implements MySQL, Install MySQL Server 8.0.32 in your environment
+
+Flask>=1.0.0
+chatterbot==1.0.4
+chatterbot-corpus>=1.2.0
+SQLAlchemy>=1.2
+Flask-Session
+pytz
+mysql-connector-python
+pymysql
+cryptography
+Flask-SQLAlchemy
